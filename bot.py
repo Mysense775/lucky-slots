@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 BOT_TOKEN = "8500469192:AAE-fnqfbRchyOTvNh0GpqbPvpzUsUg6OTc"
 
 # WebApp URL (GitHub Pages or your server)
-WEBAPP_URL = "https://mysense775.github.io/lucky-slots/"
+WEBAPP_URL = "https://mysense775.github.io/lucky-slots/index.html?v=2"
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()

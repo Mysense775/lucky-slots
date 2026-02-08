@@ -65,6 +65,162 @@
             50% { transform: translate(50px, -30px); }
         }
         
+        /* Particles */
+        .particles-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue));
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 10s ease-in-out infinite;
+            box-shadow: 0 0 10px currentColor;
+        }
+        
+        @keyframes particleFloat {
+            0% { 
+                opacity: 0;
+                transform: translateY(100vh) scale(0) rotate(0deg);
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { 
+                opacity: 0;
+                transform: translateY(-20vh) scale(1.5) rotate(720deg);
+            }
+        }
+        
+        /* Shooting stars */
+        .shooting-stars {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .shooting-star {
+            position: absolute;
+            width: 100px; height: 2px;
+            background: linear-gradient(90deg, transparent, white, transparent);
+            opacity: 0;
+            animation: shoot 4s ease-out infinite;
+            filter: drop-shadow(0 0 6px white);
+        }
+        
+        .shooting-star:nth-child(1) {
+            top: 20%; left: -100px;
+            animation-delay: 0s;
+            transform: rotate(-45deg);
+        }
+        
+        .shooting-star:nth-child(2) {
+            top: 40%; left: -100px;
+            animation-delay: 2s;
+            transform: rotate(-40deg);
+        }
+        
+        .shooting-star:nth-child(3) {
+            top: 60%; left: -100px;
+            animation-delay: 1s;
+            transform: rotate(-50deg);
+        }
+        
+        @keyframes shoot {
+            0% { 
+                opacity: 0;
+                transform: translateX(0) rotate(-45deg);
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
+                opacity: 0;
+                transform: translateX(calc(100vw + 200px)) rotate(-45deg);
+            }
+        }
+        
+        /* Grid overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+            animation: gridPulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* Floating shapes */
+        .floating-shapes {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: shapeFloat 20s ease-in-out infinite;
+        }
+        
+        .shape.diamond {
+            width: 30px; height: 30px;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            transform: rotate(45deg);
+        }
+        
+        .shape.circle {
+            width: 40px; height: 40px;
+            border: 2px solid var(--neon-blue);
+            border-radius: 50%;
+            background: transparent;
+        }
+        
+        .shape:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .shape:nth-child(2) { top: 70%; left: 80%; animation-delay: 5s; }
+        .shape:nth-child(3) { top: 30%; left: 85%; animation-delay: 10s; }
+        .shape:nth-child(4) { top: 80%; left: 15%; animation-delay: 3s; }
+        .shape:nth-child(5) { top: 50%; left: 5%; animation-delay: 7s; }
+        
+        @keyframes shapeFloat {
+            0%, 100% { 
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.1;
+            }
+            25% { 
+                transform: translate(30px, -30px) rotate(90deg);
+                opacity: 0.2;
+            }
+            50% { 
+                transform: translate(0, -60px) rotate(180deg);
+                opacity: 0.1;
+            }
+            75% { 
+                transform: translate(-30px, -30px) rotate(270deg);
+                opacity: 0.2;
+            }
+        }
+        
         /* Noise texture overlay */
         .noise {
             position: fixed;
@@ -531,6 +687,28 @@
     <div class="orb orb-3"></div>
     <div class="noise"></div>
     
+    <!-- Animated particles -->
+    <div class="particles-container" id="particles"></div>
+    
+    <!-- Shooting stars -->
+    <div class="shooting-stars">
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+    </div>
+    
+    <!-- Grid overlay -->
+    <div class="grid-overlay"></div>
+    
+    <!-- Floating diamonds -->
+    <div class="floating-shapes">
+        <div class="shape diamond"></div>
+        <div class="shape diamond"></div>
+        <div class="shape diamond"></div>
+        <div class="shape circle"></div>
+        <div class="shape circle"></div>
+    </div>
+    
     <div id="app">
         <header class="header">
             <h1 class="logo">🎰 NEON SLOTS</h1>
@@ -627,6 +805,21 @@
             window.Telegram.WebApp.ready();
             window.Telegram.WebApp.expand();
             window.Telegram.WebApp.enableClosingConfirmation();
+        }
+        
+        // Generate particles
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 30;
+        const colors = ['#ff006e', '#00f5ff', '#8338ec', '#ffd700'];
+        
+        for (let i = 0; i < particleCount; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 10 + 's';
+            p.style.animationDuration = (8 + Math.random() * 6) + 's';
+            p.style.background = `linear-gradient(135deg, ${colors[Math.floor(Math.random() * colors.length)]}, ${colors[Math.floor(Math.random() * colors.length)]})`;
+            particlesContainer.appendChild(p);
         }
         
         // Game state
