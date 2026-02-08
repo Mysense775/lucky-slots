@@ -15,10 +15,10 @@ from aiogram.filters import Command
 logging.basicConfig(level=logging.INFO)
 
 # Bot token (create via @BotFather)
-BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"  # Replace with your token from @BotFather
+BOT_TOKEN = "8500469192:AAE-fnqfbRchyOTvNh0GpqbPvpzUsUg6OTc"
 
 # WebApp URL (GitHub Pages or your server)
-WEBAPP_URL = "https://yourusername.github.io/slots/"  # Replace with your URL
+WEBAPP_URL = "https://mysense775.github.io/lucky-slots/"
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
