@@ -221,6 +221,49 @@
             }
         }
         
+        /* Money rain */
+        .money-rain {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .money {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0;
+            animation: moneyFall linear infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+        }
+        
+        .money::before {
+            content: '💵';
+        }
+        
+        .money:nth-child(3n)::before { content: '💴'; }
+        .money:nth-child(3n+1)::before { content: '💶'; }
+        .money:nth-child(3n+2)::before { content: '💷'; }
+        
+        @keyframes moneyFall {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px) rotate(0deg) scale(0.5);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(360deg) scale(1);
+            }
+        }
+        
         /* Noise texture overlay */
         .noise {
             position: fixed;
@@ -709,6 +752,9 @@
         <div class="shape circle"></div>
     </div>
     
+    <!-- Flying money -->
+    <div class="money-rain" id="moneyRain"></div>
+    
     <div id="app">
         <header class="header">
             <h1 class="logo">🎰 NEON SLOTS</h1>
@@ -820,6 +866,20 @@
             p.style.animationDuration = (8 + Math.random() * 6) + 's';
             p.style.background = `linear-gradient(135deg, ${colors[Math.floor(Math.random() * colors.length)]}, ${colors[Math.floor(Math.random() * colors.length)]})`;
             particlesContainer.appendChild(p);
+        }
+        
+        // Generate flying money
+        const moneyRain = document.getElementById('moneyRain');
+        const moneyCount = 15;
+        
+        for (let i = 0; i < moneyCount; i++) {
+            const money = document.createElement('div');
+            money.className = 'money';
+            money.style.left = Math.random() * 100 + '%';
+            money.style.animationDelay = Math.random() * 8 + 's';
+            money.style.animationDuration = (6 + Math.random() * 4) + 's';
+            money.style.fontSize = (20 + Math.random() * 16) + 'px';
+            moneyRain.appendChild(money);
         }
         
         // Game state
